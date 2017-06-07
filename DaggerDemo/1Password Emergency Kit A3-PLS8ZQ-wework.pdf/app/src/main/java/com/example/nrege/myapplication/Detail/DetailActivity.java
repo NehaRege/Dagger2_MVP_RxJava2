@@ -48,9 +48,5 @@ public class DetailActivity extends AppCompatActivity {
         txt_company.setText(user.getCompany().getName());
         txt_website.setText(user.getWebsite());
 
-
-
-
-
     }
 }

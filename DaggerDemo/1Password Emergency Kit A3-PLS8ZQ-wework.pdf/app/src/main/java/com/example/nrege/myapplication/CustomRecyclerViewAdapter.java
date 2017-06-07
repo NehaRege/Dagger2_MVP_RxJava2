@@ -76,11 +76,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
 
         View cardLayout = inflater.inflate(R.layout.rv_card_layout,parent,false);
         return new SampleViewHolder(cardLayout);
-
-
     }
-
-
 
     @Override
     public void onBindViewHolder(SampleViewHolder holder, int position) {

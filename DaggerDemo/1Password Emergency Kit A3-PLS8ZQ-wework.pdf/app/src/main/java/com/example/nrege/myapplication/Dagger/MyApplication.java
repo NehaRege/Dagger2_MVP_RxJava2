@@ -16,7 +16,6 @@ public class MyApplication extends Application {
 
     public StorageComponent componentStorage;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,12 +25,10 @@ public class MyApplication extends Application {
                 .storageModule(new StorageModule(this))
                 .retrofitModule(new RetrofitModule(this,BASEURL))
                 .build();
-
     }
 
     public StorageComponent getStorageComponent() {
         return componentStorage;
     }
-
 
 }
