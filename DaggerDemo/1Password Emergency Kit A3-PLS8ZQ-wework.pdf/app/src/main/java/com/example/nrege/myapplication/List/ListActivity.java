@@ -45,24 +45,14 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
 
     private ArrayList<User> allUsers = new ArrayList<>();
 
+    @Inject
     ListPresenter listPresenter;
-
-    @Inject
-    Retrofit retrofit;
-
-    @Inject
-    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rv);
-
-        ((MyApplication) getApplication()).getStorageComponent().inject(ListActivity.this);
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
-        listPresenter = new ListPresenterImpl(this, retrofit, sharedPref, networkInfo);
+        ((MyApplication) getApplication()).createListComponent(this).inject(ListActivity.this);
 
         initializeViews();
         setLayoutManager();

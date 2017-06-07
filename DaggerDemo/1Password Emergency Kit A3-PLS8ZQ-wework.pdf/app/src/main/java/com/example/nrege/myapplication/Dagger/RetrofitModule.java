@@ -1,5 +1,9 @@
 package com.example.nrege.myapplication.Dagger;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -27,5 +31,12 @@ public class RetrofitModule {
                 .build();
 
         return retrofit;
+    }
+
+    @Provides
+    NetworkInfo provideNetworkInfo(){
+        ConnectivityManager connMgr = (ConnectivityManager) myApplication.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return networkInfo;
     }
 }

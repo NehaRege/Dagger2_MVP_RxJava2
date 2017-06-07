@@ -6,6 +6,7 @@ import com.example.nrege.myapplication.Dagger.DaggerStorageComponent;
 import com.example.nrege.myapplication.Dagger.RetrofitModule;
 import com.example.nrege.myapplication.Dagger.StorageComponent;
 import com.example.nrege.myapplication.Dagger.StorageModule;
+import com.example.nrege.myapplication.List.ListView;
 
 /**
  * Created by nrege on 6/1/17.
@@ -23,7 +24,7 @@ public class MyApplication extends Application {
         componentStorage = DaggerStorageComponent
                 .builder()
                 .storageModule(new StorageModule(this))
-                .retrofitModule(new RetrofitModule(this,BASEURL))
+                .retrofitModule(new RetrofitModule(this, BASEURL))
                 .build();
     }
 
@@ -31,4 +32,12 @@ public class MyApplication extends Application {
         return componentStorage;
     }
 
+    public ListActivityComponent createListComponent(ListView listView){
+        return DaggerListActivityComponent
+                .builder()
+                .storageModule(new StorageModule(this))
+                .retrofitModule(new RetrofitModule(this, BASEURL))
+                .listPresenterModule(new ListPresenterModule(listView))
+                .build();
+    }
 }

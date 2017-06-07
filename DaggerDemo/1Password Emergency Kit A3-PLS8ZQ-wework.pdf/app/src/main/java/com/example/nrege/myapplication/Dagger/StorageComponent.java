@@ -16,15 +16,6 @@ import dagger.Component;
 @Component(modules = {StorageModule.class, RetrofitModule.class})
 public interface StorageComponent {
 
-//    void inject(MainActivity mainActivity);
-//
-//    void inject(BActivity bActivity);
-
-    void inject(ListActivity listActivity);
-
     void inject(DetailActivity detailActivity);
 
-    void inject(DetailPresenterImpl detailPresenterImpl);
-
-    void inject(ListPresenterImpl listPresenterImpl);
 }
