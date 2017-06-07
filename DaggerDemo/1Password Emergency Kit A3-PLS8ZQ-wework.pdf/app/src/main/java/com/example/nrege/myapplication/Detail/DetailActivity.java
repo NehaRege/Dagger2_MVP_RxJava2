@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.nrege.myapplication.List.ListActivity;
 import com.example.nrege.myapplication.Models.User;
 import com.example.nrege.myapplication.Dagger.MyApplication;
 import com.example.nrege.myapplication.R;
@@ -20,8 +21,6 @@ import javax.inject.Inject;
 public class DetailActivity extends AppCompatActivity implements DetailView {
     private static String TAG = "DetailActivity";
 
-    DetailPresenter detailPresenter;
-
     TextView txt_email;
     TextView txt_contact;
     TextView txt_name;
@@ -29,8 +28,10 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     TextView txt_company;
     TextView txt_website;
 
+
     @Inject
-    SharedPreferences sharedPreferences;
+    DetailPresenter detailPresenter;
+
 
 
     @Override
@@ -38,11 +39,14 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ((MyApplication)getApplication()).getStorageComponent().inject(DetailActivity.this);
+//        ((MyApplication)getApplication()).getStorageComponent().inject(DetailActivity.this);
+
+        ((MyApplication) getApplication()).createDetailComponent(this).inject(DetailActivity.this);
+
 
         findViews();
 
-        detailPresenter = new DetailPresenterImpl(this, sharedPreferences);
+//        detailPresenter = new DetailPresenterImpl(this, sharedPreferences);
     }
 
     @Override
