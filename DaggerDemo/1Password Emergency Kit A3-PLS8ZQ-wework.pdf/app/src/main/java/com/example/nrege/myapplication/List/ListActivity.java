@@ -22,6 +22,7 @@ import com.example.nrege.myapplication.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,15 +35,17 @@ import retrofit2.Retrofit;
  * Created by nrege on 6/2/17.
  */
 
-public class ListActivity extends AppCompatActivity implements CustomRecyclerViewAdapter.OnRecyclerViewItemClickListener {
+public class ListActivity extends AppCompatActivity implements CustomRecyclerViewAdapter.OnRecyclerViewItemClickListener, ListView {
 
-    private static String TAG = "User";
+    private static String TAG = "ListActivity";
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter rvAdapter;
     private RecyclerView.LayoutManager rvLayoutManager;
 
     private ArrayList<User> allUsers = new ArrayList<>();
+
+    ListPresenter listPresenter;
 
     @Inject
     Retrofit retrofit;
@@ -55,57 +58,51 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rv);
 
-        ((MyApplication)getApplication()).getStorageComponent().inject(ListActivity.this);
+        ((MyApplication) getApplication()).getStorageComponent().inject(ListActivity.this);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+        listPresenter = new ListPresenterImpl(this, retrofit, sharedPref, networkInfo);
 
-        loadUserData();
+        initializeViews();
+        setLayoutManager();
+    }
 
-        rvLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(rvLayoutManager);
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listPresenter.init();
     }
 
     @Override
     public void onItemClick(int position) {
+        listPresenter.onListItemClick(position);
+    }
 
-        sharedPref.edit().putString("user", new Gson().toJson(allUsers.get(position))).apply();
-
+    @Override
+    public void navigateToDetail() {
         Intent i = new Intent(ListActivity.this, DetailActivity.class);
         startActivity(i);
     }
 
-    public void loadUserData() {
-
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-
-            APIService service = retrofit.create(APIService.class);
-            Call<ArrayList<User>> getAllUsers = service.getUsers();
-
-            getAllUsers.enqueue(new Callback<ArrayList<User>>() {
-                @Override
-                public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                    allUsers = response.body();
-
-                    Log.d(TAG, "onResponse: all users = " +allUsers);
-                    rvAdapter = new CustomRecyclerViewAdapter(allUsers,ListActivity.this);
-                    recyclerView.setAdapter(rvAdapter);
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                    Toast.makeText(ListActivity.this, "No network connection", Toast.LENGTH_LONG).show();
-                }
-            });
-
-        } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
-        }
-
+    @Override
+    public void setData(ArrayList<User> userList) {
+        rvAdapter = new CustomRecyclerViewAdapter(userList, ListActivity.this);
+        recyclerView.setAdapter(rvAdapter);
     }
 
+    @Override
+    public void showNoInternetToast() {
+        Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
+    }
 
+    public void initializeViews() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+    }
+
+    public void setLayoutManager() {
+        rvLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(rvLayoutManager);
+    }
 }
