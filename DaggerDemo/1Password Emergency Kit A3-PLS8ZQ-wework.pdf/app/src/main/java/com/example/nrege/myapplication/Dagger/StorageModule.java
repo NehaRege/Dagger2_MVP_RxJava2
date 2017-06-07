@@ -1,9 +1,7 @@
-package com.example.nrege.myapplication;
+package com.example.nrege.myapplication.Dagger;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,11 +11,11 @@ import dagger.Provides;
  */
 
 @Module
-class StorageModule {
+public class StorageModule {
 
-    private MyApplication myApplication;
+    MyApplication myApplication;
 
-    StorageModule(MyApplication myApplication) {
+    public StorageModule(MyApplication myApplication) {
         this.myApplication = myApplication;
     }
 

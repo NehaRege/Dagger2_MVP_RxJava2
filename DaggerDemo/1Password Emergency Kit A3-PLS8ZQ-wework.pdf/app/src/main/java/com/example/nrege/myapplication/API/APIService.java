@@ -1,4 +1,4 @@
-package com.example.nrege.myapplication;
+package com.example.nrege.myapplication.API;
 
 import com.example.nrege.myapplication.Models.User;
 

@@ -1,11 +1,4 @@
-package com.example.nrege.myapplication;
-
-import android.app.Application;
-import android.content.SharedPreferences;
-
-import com.google.gson.Gson;
-
-import javax.inject.Singleton;
+package com.example.nrege.myapplication.Dagger;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class RetrofitModule {
-    private MyApplication myApplication;
+    MyApplication myApplication;
 
     private static String baseUrl = "https://jsonplaceholder.typicode.com/";
 

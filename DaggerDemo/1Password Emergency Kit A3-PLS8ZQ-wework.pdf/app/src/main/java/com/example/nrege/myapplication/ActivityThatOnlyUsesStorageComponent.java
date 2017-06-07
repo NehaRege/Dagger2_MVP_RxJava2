@@ -1,5 +1,7 @@
 package com.example.nrege.myapplication;
 
+import com.example.nrege.myapplication.Dagger.StorageModule;
+
 import dagger.Component;
 
 /**

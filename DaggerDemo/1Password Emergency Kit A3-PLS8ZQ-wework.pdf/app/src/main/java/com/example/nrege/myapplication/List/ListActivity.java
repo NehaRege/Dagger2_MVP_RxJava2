@@ -1,4 +1,4 @@
-package com.example.nrege.myapplication;
+package com.example.nrege.myapplication.List;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +13,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.nrege.myapplication.Models.AllUsers;
+import com.example.nrege.myapplication.API.APIService;
+import com.example.nrege.myapplication.CustomRecyclerViewAdapter;
+import com.example.nrege.myapplication.Detail.DetailActivity;
 import com.example.nrege.myapplication.Models.User;
+import com.example.nrege.myapplication.Dagger.MyApplication;
+import com.example.nrege.myapplication.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,7 +29,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by nrege on 6/2/17.

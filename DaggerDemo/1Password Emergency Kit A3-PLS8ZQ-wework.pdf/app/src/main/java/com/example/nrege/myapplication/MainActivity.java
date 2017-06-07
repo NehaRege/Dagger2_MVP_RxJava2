@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.nrege.myapplication.Dagger.MyApplication;
+
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {

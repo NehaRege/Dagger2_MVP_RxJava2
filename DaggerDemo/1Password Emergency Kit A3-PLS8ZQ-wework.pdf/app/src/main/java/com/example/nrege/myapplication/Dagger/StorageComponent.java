@@ -1,6 +1,9 @@
-package com.example.nrege.myapplication;
+package com.example.nrege.myapplication.Dagger;
 
-import javax.inject.Singleton;
+import com.example.nrege.myapplication.BActivity;
+import com.example.nrege.myapplication.Detail.DetailActivity;
+import com.example.nrege.myapplication.List.ListActivity;
+import com.example.nrege.myapplication.MainActivity;
 
 import dagger.Component;
 

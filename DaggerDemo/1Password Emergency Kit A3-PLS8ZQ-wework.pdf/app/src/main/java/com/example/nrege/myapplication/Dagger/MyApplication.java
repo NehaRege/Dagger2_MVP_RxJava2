@@ -1,9 +1,11 @@
-package com.example.nrege.myapplication;
+package com.example.nrege.myapplication.Dagger;
 
 import android.app.Application;
 
-import dagger.Module;
-import retrofit2.Retrofit;
+import com.example.nrege.myapplication.Dagger.DaggerStorageComponent;
+import com.example.nrege.myapplication.Dagger.RetrofitModule;
+import com.example.nrege.myapplication.Dagger.StorageComponent;
+import com.example.nrege.myapplication.Dagger.StorageModule;
 
 /**
  * Created by nrege on 6/1/17.
@@ -12,7 +14,7 @@ public class MyApplication extends Application {
 
     private static String BASEURL = "https://jsonplaceholder.typicode.com/";
 
-    StorageComponent componentStorage;
+    public StorageComponent componentStorage;
 
 
     @Override
