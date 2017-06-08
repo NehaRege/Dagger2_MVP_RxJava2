@@ -75,7 +75,6 @@ public class ListPresenterImpl implements ListPresenter {
                 public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                     listView.showRetrofitFailureToast();
                     Log.d(TAG, "onFailure: " + t.getMessage());
-                    t.printStackTrace();
                 }
             });
 
