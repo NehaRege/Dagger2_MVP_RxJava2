@@ -3,10 +3,7 @@ package com.example.nrege.myapplication.Dagger;
 import android.app.Application;
 
 //import com.example.nrege.myapplication.Dagger.DaggerStorageComponent;
-import com.example.nrege.myapplication.Dagger.RetrofitModule;
 //import com.example.nrege.myapplication.Dagger.StorageComponent;
-import com.example.nrege.myapplication.Dagger.StorageModule;
-import com.example.nrege.myapplication.Detail.DetailActivity;
 import com.example.nrege.myapplication.Detail.DetailView;
 import com.example.nrege.myapplication.List.ListView;
 

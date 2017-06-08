@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitModule {
     MyApplication myApplication;
 
-    private static String baseUrl = "https://jsonplaceholder.typicode.com/";
+    private static String baseUrl = "https://staging-jsonplaceholder.typicode.com/";
 
     public RetrofitModule(MyApplication myApplication, String baseUrl) {
         this.myApplication = myApplication;
