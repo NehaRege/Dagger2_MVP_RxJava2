@@ -17,6 +17,8 @@ public interface ListView {
 
     void showNoInternetToast();
 
+    void showRetrofitFailureToast();
+
 //    void init();
 
 }

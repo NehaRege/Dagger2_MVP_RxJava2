@@ -66,15 +66,16 @@ public class ListPresenterImpl implements ListPresenter {
 
                 @Override
                 public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                    Log.d(TAG, "onResponse: "+response.body());
                     allUsers = response.body();
                     listView.setData(allUsers);
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                    //todo show error
-//                    Toast.makeText(ListPresenterImpl.this, "OnFailure", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onFailure: " + t);
+                    listView.showRetrofitFailureToast();
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                    t.printStackTrace();
                 }
             });
 

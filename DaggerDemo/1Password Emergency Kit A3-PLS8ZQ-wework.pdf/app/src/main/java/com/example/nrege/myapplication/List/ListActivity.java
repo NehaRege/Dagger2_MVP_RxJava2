@@ -86,12 +86,18 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
         Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void showRetrofitFailureToast() {
+        Toast.makeText(this, "Retrofit Call Failure", Toast.LENGTH_SHORT).show();
+    }
+
     public void initializeViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
     }
 
     public void setLayoutManager() {
+
         rvLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(rvLayoutManager);
     }
