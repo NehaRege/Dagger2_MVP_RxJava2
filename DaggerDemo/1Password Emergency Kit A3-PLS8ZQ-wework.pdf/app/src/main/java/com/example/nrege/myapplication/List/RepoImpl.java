@@ -1,25 +1,14 @@
 package com.example.nrege.myapplication.List;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.nrege.myapplication.API.APIService;
-import com.example.nrege.myapplication.CustomRecyclerViewAdapter;
-import com.example.nrege.myapplication.Dagger.MyApplication;
 import com.example.nrege.myapplication.Models.User;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,35 +16,30 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by nrege on 6/7/17.
+ * Created by nrege on 6/9/17.
  */
 
-public class ListPresenterImpl implements ListPresenter {
-    public static final String TAG = "ListPresenterImpl";
+public class RepoImpl implements Repo {
 
-    private ArrayList<User> allUsers = new ArrayList<>();
+    private static String TAG = "RepoImpl";
 
-    ListView listView;
 
     Retrofit retrofit;
     SharedPreferences sharedPreferences;
     NetworkInfo networkInfo;
+    
+    User user;
 
-    public ListPresenterImpl(ListView listView, Retrofit r, SharedPreferences s, NetworkInfo networkInfo) {
-        this.listView = listView;
-        this.retrofit = r;
-        this.sharedPreferences = s;
+    private ArrayList<User> allUsers = new ArrayList<>();
+
+    public RepoImpl(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
+        this.retrofit = retrofit;
+        this.sharedPreferences = sharedPreferences;
         this.networkInfo = networkInfo;
     }
 
-
     @Override
-    public void init() {
-        getData();
-    }
-
-    @Override
-    public void getData() {
+    public void getUsersFromRetrofit(final OnCallbackFinished callbackFinished) {
         if (networkInfo != null && networkInfo.isConnected()) {
             APIService service = retrofit.create(APIService.class);
             Log.d(TAG, "getData: retrofit = " + retrofit);
@@ -67,26 +51,42 @@ public class ListPresenterImpl implements ListPresenter {
                 @Override
                 public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                     Log.d(TAG, "onResponse: "+response.body());
+                    
+                    callbackFinished.onSuccess(allUsers);
+
                     allUsers = response.body();
-                    listView.setData(allUsers);
+//                    listView.setData(allUsers);
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                    listView.showRetrofitFailureToast();
+//                    listView.showRetrofitFailureToast();
+                    
+                    callbackFinished.onFailure(t);
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
 
         } else {
-            listView.showNoInternetToast();
+            Log.d(TAG, "getUsersFromRetrofit: No network");
+//            listView.showNoInternetToast();
         }
+        
     }
 
     @Override
-    public void onListItemClick(int position) {
-        sharedPreferences.edit().putString("user", new Gson().toJson(allUsers.get(position))).apply();
-        listView.navigateToDetail();
-
+    public void saveUserToSharedPrefs(int position, User user) {
+        sharedPreferences.edit().putString("user", new Gson().toJson(user)).apply();
     }
+
+    @Override
+    public User getUserFromSharedPrefs(int position) {
+        
+        String jsonUser = sharedPreferences.getString("user",null);
+        user = new Gson().fromJson(jsonUser,User.class);
+        
+        return user;
+        
+    }
+
 }
