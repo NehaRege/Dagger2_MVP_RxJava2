@@ -2,13 +2,16 @@ package com.example.nrege.myapplication.Repo;
 
 import android.content.SharedPreferences;
 import android.net.NetworkInfo;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.nrege.myapplication.API.APIService;
 import com.example.nrege.myapplication.Models.User;
-import com.example.nrege.myapplication.Repo.Repo;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -26,20 +29,35 @@ public class RepoImpl implements Repo {
 
     Retrofit retrofit;
     SharedPreferences sharedPreferences;
+    @Nullable
     NetworkInfo networkInfo;
     
-    User user;
+    User singleUser;
 
-    private ArrayList<User> allUsers = new ArrayList<>();
+    String id;
 
-    public RepoImpl(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
+    private ArrayList<User> userList = new ArrayList<>();
+
+    public RepoImpl(Retrofit retrofit, SharedPreferences sharedPreferences,@Nullable NetworkInfo networkInfo) {
         this.retrofit = retrofit;
         this.sharedPreferences = sharedPreferences;
         this.networkInfo = networkInfo;
     }
 
+    /*
+    *
+    *       User List
+    *
+    *
+    * */
+
+
     @Override
-    public void getUsersFromRetrofit(final OnCallbackFinished callbackFinished) {
+    public void getUserListFromRetrofit(final OnCallbackFinished callbackFinished) {
+//        if(userList!=null){
+//            callbackFinished.onSuccess(userList);
+//        }
+
         if (networkInfo != null && networkInfo.isConnected()) {
             APIService service = retrofit.create(APIService.class);
             Log.d(TAG, "getData: retrofit = " + retrofit);
@@ -51,54 +69,128 @@ public class RepoImpl implements Repo {
                 @Override
                 public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                     Log.d(TAG, "onResponse: "+response.body());
+
+                    Log.d(TAG, "onResponse: data from retrofit");
                     
-                    allUsers = response.body();
+                    userList = response.body();
 
+                    saveUserListToSharedPrefs(userList);
 
-                    callbackFinished.onSuccess(allUsers);
+                    callbackFinished.onSuccess(userList, "retrofit");
 
-//                    listView.setData(allUsers);
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-//                    listView.showRetrofitFailureToast();
 
                     callbackFinished.onFailure(t);
+
                     Log.d(TAG, "onFailure: " + t.getMessage());
+
                 }
             });
 
         } else {
-            callbackFinished.onSuccess(getUsersFromSharedPrefs());
+
             Log.d(TAG, "getUsersFromRetrofit: No network");
+
+            callbackFinished.onSuccess(getUserListFromSharedPrefs(), "shared_prefs");
+
         }
     }
 
     @Override
-    public void saveUserToSharedPrefs(User user) {
-        sharedPreferences.edit().putString("user", new Gson().toJson(user)).apply();
+    public void saveUserListToSharedPrefs(ArrayList<User> allUsers){
+
+        Log.d(TAG, "saveUserListToSharedPrefs: all users = "+allUsers);
+
+        Type listType = new TypeToken<ArrayList<User>>() {}.getType();
+
+        sharedPreferences.edit().putString("user_list", new Gson().toJson(allUsers,listType)).apply();
+
     }
 
-    public void saveUserList(ArrayList<User> users){
-        sharedPreferences.edit().putString("user_list", new Gson().toJson(user)).apply();
+
+    private ArrayList<User> getUserListFromSharedPrefs(){
+
+        Log.d(TAG, "getUserListFromSharedPrefs: ");
+        String jsonUser = sharedPreferences.getString("user_list",null);
+
+        Type type = new TypeToken<ArrayList<User>>(){}.getType();
+        ArrayList<User> userList = new Gson().fromJson(jsonUser,type);
+
+        Log.d(TAG, "getUserListFromSharedPrefs: userList = "+userList);
+        return userList;
+
+    }
+
+    /*
+    *
+    *       Single User
+    *
+    * */
+
+    @Override
+    public void position(int position) {
+        id = Integer.toString(position);
     }
 
     @Override
-    public User getUserFromSharedPrefs() {
-        
+    public void getSingleUser(String id, final OnCallbackFinishedForSingleUser callbackFinished) {
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            APIService service = retrofit.create(APIService.class);
+
+            Log.d(TAG, "getSingleUser:  possssssss = "+id);
+            Call<User> getSingleUser = service.getSingleUser(id);
+
+            getSingleUser.enqueue(new Callback<User>() {
+
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    Log.d(TAG, "onResponse: "+response.body());
+
+                    Log.d(TAG, "onResponse: data from retrofit");
+
+                    singleUser = response.body();
+
+                    saveSingleUserToSharedPrefs(singleUser);
+
+                    callbackFinished.onSuccess(singleUser,"retrofit");
+
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+
+                    callbackFinished.onFailure(t);
+
+                }
+            });
+
+        } else {
+            callbackFinished.onSuccess(getSingleUserFromSharedPrefs(),"shared_prefs");
+        }
+
+    }
+
+    @Override
+    public void saveSingleUserToSharedPrefs(User user) {
+
+        sharedPreferences.edit().putString("user", new Gson().toJson(user)).apply();
+
+    }
+
+
+    @Override
+    public User getSingleUserFromSharedPrefs() {
+
         String jsonUser = sharedPreferences.getString("user",null);
-        user = new Gson().fromJson(jsonUser,User.class);
-        return user;
+        singleUser = new Gson().fromJson(jsonUser,User.class);
+        return singleUser;
         
     }
 
-    private ArrayList<User> getUsersFromSharedPrefs(){
-        String jsonUser = sharedPreferences.getString("user",null);
-        user = new Gson().fromJson(jsonUser,User.class);
 
-        return new ArrayList<User>();
-
-    }
 
 }

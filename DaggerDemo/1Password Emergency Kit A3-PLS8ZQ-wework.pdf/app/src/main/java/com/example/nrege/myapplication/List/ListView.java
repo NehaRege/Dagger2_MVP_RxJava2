@@ -11,13 +11,15 @@ import java.util.List;
 
 public interface ListView {
 
-    void navigateToDetail();
+    void navigateToDetail(String position);
 
     void setData(ArrayList<User> userList);
 
     void showNoInternetToast();
 
     void showRetrofitFailureToast();
+
+    void showToast(String s);
 
 //    void init();
 

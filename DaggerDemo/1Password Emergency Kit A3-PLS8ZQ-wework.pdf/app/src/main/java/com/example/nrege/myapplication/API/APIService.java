@@ -20,6 +20,6 @@ public interface APIService {
     Call<ArrayList<User>> getUsers();
 
     @GET("/users/{id}")
-    Call<User> getUser(@Path("id") String id);
+    Call<User> getSingleUser(@Path("id") String id);
 
 }

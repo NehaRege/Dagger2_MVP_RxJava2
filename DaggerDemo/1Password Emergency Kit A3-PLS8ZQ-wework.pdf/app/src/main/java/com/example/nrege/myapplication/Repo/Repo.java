@@ -11,17 +11,34 @@ import java.util.ArrayList;
 public interface Repo {
 
     interface OnCallbackFinished {
-        void onSuccess(ArrayList<User> users);
+        void onSuccess(ArrayList<User> users, String s);
 
         void onFailure(Throwable throwable);
     }
 
-    void getUsersFromRetrofit(OnCallbackFinished callbackFinished);
+    interface OnCallbackFinishedForSingleUser {
+        void onSuccess(User user, String s);
 
-    void saveUserToSharedPrefs(User user);
+        void onFailure(Throwable throwable);
+    }
+
+    void getUserListFromRetrofit(OnCallbackFinished callbackFinished);
+
+    void getSingleUser(String id, OnCallbackFinishedForSingleUser callbackFinished);
+
+    void saveSingleUserToSharedPrefs(User user);
+
+    void saveUserListToSharedPrefs(ArrayList<User> allUsers);
+
+    void position(int position);
 
     //todo rename to getuser()
-    User getUserFromSharedPrefs();
+
+
+    User getSingleUserFromSharedPrefs();
+
+
+
 
 
 

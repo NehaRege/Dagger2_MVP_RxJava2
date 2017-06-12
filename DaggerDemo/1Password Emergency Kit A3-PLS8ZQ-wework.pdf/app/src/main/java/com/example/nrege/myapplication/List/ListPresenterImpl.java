@@ -1,5 +1,6 @@
 package com.example.nrege.myapplication.List;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.nrege.myapplication.Models.User;
@@ -26,29 +27,48 @@ public class ListPresenterImpl implements ListPresenter, Repo.OnCallbackFinished
 
     @Override
     public void init() {
-        repo.getUsersFromRetrofit(this);
+        repo.getUserListFromRetrofit(this);
     }
 
     @Override
     public void onListItemClick(int position) {
         Log.d(TAG, "onListItemClick: position data = "+allUsers.get(position));
-        repo.saveUserToSharedPrefs(allUsers.get(position));
-        listView.navigateToDetail();
+        repo.saveSingleUserToSharedPrefs(allUsers.get(position));
+
+        Log.d(TAG, "onListItemClick: position = "+position);
+
+        int pos = position+1;
+
+        Log.d(TAG, "onListItemClick: pos = "+pos);
+
+        repo.position(pos);
+
+
+
+
+        listView.navigateToDetail(Integer.toString(pos));
     }
 
     @Override
-    public void onSuccess(ArrayList<User> users) {
-        Log.d(TAG, "onSuccess: users = "+users.size());
+    public void onSuccess(ArrayList<User> users, String s) {
+
+        if(s.equals("shared_prefs")) {
+            listView.showToast("No internet connection. Retrieving User list from Shared Preferences!");
+        } else if(s.equals("retrofit")) {
+            listView.showToast("User list received from Retrofit Call");
+        }
+
         allUsers = users;
-        listView.setData(users);
+
+        repo.saveUserListToSharedPrefs(allUsers);
+
+        listView.setData(allUsers);
+
     }
 
     @Override
     public void onFailure(Throwable throwable) {
-
-        listView.showNoInternetToast();
-
-
-
+        listView.showToast("Network call failed!");
     }
+
 }

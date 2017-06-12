@@ -25,8 +25,8 @@ public class MyApplication extends Application {
                 .builder()
                 .storageModule(new StorageModule(this))
                 .retrofitModule(new RetrofitModule(this, BASEURL))
-                .listPresenterModule(new ListPresenterModule(listView))
                 .repoModule(new RepoModule(this))
+                .listPresenterModule(new ListPresenterModule(listView))
                 .build();
     }
 
@@ -35,8 +35,8 @@ public class MyApplication extends Application {
                 .builder()
                 .storageModule(new StorageModule(this))
                 .detailPresnterModule(new DetailPresnterModule(detailView))
-                .retrofitModule(new RetrofitModule(this,BASEURL))
                 .repoModule(new RepoModule(this))
+                .retrofitModule(new RetrofitModule(this,BASEURL))
                 .build();
     }
 

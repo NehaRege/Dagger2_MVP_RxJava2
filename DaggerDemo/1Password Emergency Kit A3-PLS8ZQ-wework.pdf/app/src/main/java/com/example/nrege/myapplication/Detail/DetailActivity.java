@@ -1,10 +1,13 @@
 package com.example.nrege.myapplication.Detail;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nrege.myapplication.List.ListActivity;
 import com.example.nrege.myapplication.Models.User;
@@ -28,6 +31,8 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     TextView txt_company;
     TextView txt_website;
 
+    String position;
+
 
     @Inject
     DetailPresenter detailPresenter;
@@ -38,9 +43,12 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        ((MyApplication)getApplication()).getStorageComponent().inject(DetailActivity.this);
-
         ((MyApplication) getApplication()).createDetailComponent(this).inject(DetailActivity.this);
+
+        Intent intent = getIntent();
+        position = intent.getStringExtra("position");
+
+        Log.d(TAG, "onCreate: pos = "+position);
 
 
         findViews();
@@ -50,7 +58,9 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     @Override
     protected void onResume() {
         super.onResume();
-        detailPresenter.init();
+        detailPresenter.init(position);
+
+        Log.d(TAG, "onResume: pos = "+position);
     }
 
     @Override
@@ -61,6 +71,11 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         txt_name.setText(name);
         txt_website.setText(website);
         txt_email.setText(email);
+    }
+
+    @Override
+    public void showToast(String s) {
+        Toast.makeText(this, ""+s, Toast.LENGTH_SHORT).show();
     }
 
     public void findViews() {

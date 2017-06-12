@@ -54,6 +54,7 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
 
         initializeViews();
         setLayoutManager();
+
     }
 
     @Override
@@ -68,8 +69,10 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
     }
 
     @Override
-    public void navigateToDetail() {
+    public void navigateToDetail(String position) {
         Intent i = new Intent(ListActivity.this, DetailActivity.class);
+        Log.d(TAG, "navigateToDetail: pos = "+position);
+        i.putExtra("position",position);
         startActivity(i);
     }
 
@@ -86,17 +89,27 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
 
     @Override
     public void showRetrofitFailureToast() {
-        Toast.makeText(this, "Retrofit Call Failure", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Retrofit Call Failure", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void showToast(String s) {
+        Toast.makeText(this, ""+s, Toast.LENGTH_LONG).show();
     }
 
     public void initializeViews() {
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+
     }
 
     public void setLayoutManager() {
 
         rvLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(rvLayoutManager);
+
     }
 }

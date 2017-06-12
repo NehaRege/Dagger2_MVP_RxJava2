@@ -1,5 +1,7 @@
 package com.example.nrege.myapplication.Detail;
 
+import android.util.Log;
+
 import com.example.nrege.myapplication.Repo.Repo;
 import com.example.nrege.myapplication.Models.User;
 
@@ -7,9 +9,13 @@ import com.example.nrege.myapplication.Models.User;
  * Created by nrege on 6/7/17.
  */
 
-public class DetailPresenterImpl implements DetailPresenter {
+public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFinishedForSingleUser {
+
+    private static String TAG = "DetailPresenterImpl";
+
 
     DetailView detailView;
+
     Repo repo;
 
     User user;
@@ -17,22 +23,28 @@ public class DetailPresenterImpl implements DetailPresenter {
     public DetailPresenterImpl(DetailView detailView, Repo repo) {
         this.detailView = detailView;
         this.repo = repo;
+    }
 
-//        this.sharedPreferences = sharedPreferences;
+    @Override
+    public void init(String position){
+
+        Log.d(TAG, "init: ");
+
+        repo.getSingleUser(position,this);
+
 
     }
 
     @Override
-    public void init(){
+    public void onSuccess(User user, String s) {
 
-        getDataFromSharedPref();
+        if(s.equals("shared_prefs")) {
+            detailView.showToast("No internet connection. Retrieving user info from Shared Preferences!");
+        } else if(s.equals("retrofit")) {
+            detailView.showToast("User info received from Retrofit Call");
+        }
 
-    }
-
-    @Override
-    public void getDataFromSharedPref() {
-
-        user = repo.getUserFromSharedPrefs();
+        repo.saveSingleUserToSharedPrefs(user);
 
         detailView.setText(
                 user.getEmail(),
@@ -45,4 +57,10 @@ public class DetailPresenterImpl implements DetailPresenter {
 
     }
 
+    @Override
+    public void onFailure(Throwable throwable) {
+
+        detailView.showToast("Network call failure");
+
+    }
 }

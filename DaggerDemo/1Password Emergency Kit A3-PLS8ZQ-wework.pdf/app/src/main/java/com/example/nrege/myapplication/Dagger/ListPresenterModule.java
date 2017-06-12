@@ -2,6 +2,7 @@ package com.example.nrege.myapplication.Dagger;
 
 import android.content.SharedPreferences;
 import android.net.NetworkInfo;
+import android.support.annotation.Nullable;
 
 import com.example.nrege.myapplication.List.ListPresenter;
 import com.example.nrege.myapplication.List.ListPresenterImpl;
@@ -29,10 +30,6 @@ public class ListPresenterModule {
         return listView;
     }
 
-//    @Provides
-//    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
-//        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
-//    }
 
     @Provides
     ListPresenter provideListPresenter(ListView listView, Repo repo) {

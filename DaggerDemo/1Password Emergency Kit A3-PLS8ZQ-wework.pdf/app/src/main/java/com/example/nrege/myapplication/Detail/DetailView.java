@@ -8,4 +8,6 @@ public interface DetailView {
 
     void setText(String email, String phone, String name, String add, String company, String website);
 
+    void showToast(String s);
+
 }

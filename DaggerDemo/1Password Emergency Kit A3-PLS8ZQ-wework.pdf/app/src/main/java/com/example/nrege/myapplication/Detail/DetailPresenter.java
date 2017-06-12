@@ -6,9 +6,8 @@ package com.example.nrege.myapplication.Detail;
 
 public interface DetailPresenter {
 
-    void init();
+    void init(String s);
 
-    void getDataFromSharedPref();
-
+//    void getDataFromSharedPref();
 
 }

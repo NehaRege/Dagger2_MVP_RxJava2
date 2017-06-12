@@ -3,6 +3,7 @@ package com.example.nrege.myapplication.Dagger;
 import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import com.example.nrege.myapplication.Repo.Repo;
 import com.example.nrege.myapplication.Repo.RepoImpl;
@@ -24,7 +25,7 @@ public class RepoModule {
     }
 
     @Provides
-    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
+    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences,@Nullable NetworkInfo networkInfo) {
         return new RepoImpl(retrofit,sharedPreferences,networkInfo);
     }
 
