@@ -1,4 +1,4 @@
-package com.example.nrege.myapplication.List;
+package com.example.nrege.myapplication.Repo;
 
 import android.content.SharedPreferences;
 import android.net.NetworkInfo;
@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.nrege.myapplication.API.APIService;
 import com.example.nrege.myapplication.Models.User;
+import com.example.nrege.myapplication.Repo.Repo;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -69,9 +70,9 @@ public class RepoImpl implements Repo {
             });
 
         } else {
+            callbackFinished.onSuccess(getUsersFromSharedPrefs());
             Log.d(TAG, "getUsersFromRetrofit: No network");
         }
-        
     }
 
     @Override
@@ -79,14 +80,24 @@ public class RepoImpl implements Repo {
         sharedPreferences.edit().putString("user", new Gson().toJson(user)).apply();
     }
 
+    public void saveUserList(ArrayList<User> users){
+        sharedPreferences.edit().putString("user_list", new Gson().toJson(user)).apply();
+    }
+
     @Override
     public User getUserFromSharedPrefs() {
         
         String jsonUser = sharedPreferences.getString("user",null);
         user = new Gson().fromJson(jsonUser,User.class);
-        
         return user;
         
+    }
+
+    private ArrayList<User> getUsersFromSharedPrefs(){
+        String jsonUser = sharedPreferences.getString("user",null);
+        user = new Gson().fromJson(jsonUser,User.class);
+
+        return new ArrayList<User>();
     }
 
 }

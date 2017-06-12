@@ -1,30 +1,11 @@
 package com.example.nrege.myapplication.List;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.nrege.myapplication.API.APIService;
-import com.example.nrege.myapplication.CustomRecyclerViewAdapter;
-import com.example.nrege.myapplication.Dagger.MyApplication;
 import com.example.nrege.myapplication.Models.User;
-import com.google.gson.Gson;
+import com.example.nrege.myapplication.Repo.Repo;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by nrege on 6/7/17.

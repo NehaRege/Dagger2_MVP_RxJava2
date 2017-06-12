@@ -6,8 +6,8 @@ import android.net.NetworkInfo;
 import com.example.nrege.myapplication.List.ListPresenter;
 import com.example.nrege.myapplication.List.ListPresenterImpl;
 import com.example.nrege.myapplication.List.ListView;
-import com.example.nrege.myapplication.List.Repo;
-import com.example.nrege.myapplication.List.RepoImpl;
+import com.example.nrege.myapplication.Repo.Repo;
+import com.example.nrege.myapplication.Repo.RepoImpl;
 
 import dagger.Module;
 import dagger.Provides;

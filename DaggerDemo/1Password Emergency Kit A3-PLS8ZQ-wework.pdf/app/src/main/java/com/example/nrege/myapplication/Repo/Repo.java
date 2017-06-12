@@ -1,4 +1,4 @@
-package com.example.nrege.myapplication.List;
+package com.example.nrege.myapplication.Repo;
 
 import com.example.nrege.myapplication.Models.User;
 
@@ -20,6 +20,7 @@ public interface Repo {
 
     void saveUserToSharedPrefs(User user);
 
+    //todo rename to getuser()
     User getUserFromSharedPrefs();
 
 

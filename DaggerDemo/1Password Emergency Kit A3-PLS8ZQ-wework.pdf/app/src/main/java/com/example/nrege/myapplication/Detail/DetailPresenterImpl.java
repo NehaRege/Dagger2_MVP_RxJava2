@@ -1,17 +1,7 @@
 package com.example.nrege.myapplication.Detail;
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-
-import com.example.nrege.myapplication.Dagger.MyApplication;
-import com.example.nrege.myapplication.List.ListPresenterImpl;
-import com.example.nrege.myapplication.List.Repo;
+import com.example.nrege.myapplication.Repo.Repo;
 import com.example.nrege.myapplication.Models.User;
-import com.google.gson.Gson;
-
-import javax.inject.Inject;
 
 /**
  * Created by nrege on 6/7/17.
