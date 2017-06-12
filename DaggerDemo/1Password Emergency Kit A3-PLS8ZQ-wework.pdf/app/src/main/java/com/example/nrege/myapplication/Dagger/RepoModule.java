@@ -7,6 +7,10 @@ import android.support.annotation.Nullable;
 
 import com.example.nrege.myapplication.Repo.Repo;
 import com.example.nrege.myapplication.Repo.RepoImpl;
+import com.example.nrege.myapplication.Sources.LocalSource;
+import com.example.nrege.myapplication.Sources.LocalSourceImpl;
+import com.example.nrege.myapplication.Sources.RemoteSource;
+import com.example.nrege.myapplication.Sources.RemoteSourceImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,5 +32,19 @@ public class RepoModule {
     Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences,@Nullable NetworkInfo networkInfo) {
         return new RepoImpl(retrofit,sharedPreferences,networkInfo);
     }
+
+    @Provides
+    RemoteSource providesRemoteSource(Retrofit retrofit, LocalSource localSource) {
+        return new RemoteSourceImpl(retrofit,localSource);
+    }
+
+
+    @Provides
+    LocalSource providesLocalSource(SharedPreferences sharedPreferences, RemoteSource remoteSource) {
+        return new LocalSourceImpl(sharedPreferences,remoteSource);
+    }
+
+
+
 
 }
