@@ -27,12 +27,13 @@ public class RepoImpl implements Repo {
 
     private static String TAG = "RepoImpl";
 
-    Retrofit retrofit;
-    SharedPreferences sharedPreferences;
+    private Retrofit retrofit;
+    private SharedPreferences sharedPreferences;
     @Nullable
+    private
     NetworkInfo networkInfo;
     
-    User singleUser;
+    private User singleUser;
 
     String id;
 
@@ -177,19 +178,15 @@ public class RepoImpl implements Repo {
 
     @Override
     public void saveSingleUserToSharedPrefs(User user) {
-
         sharedPreferences.edit().putString("user", new Gson().toJson(user)).apply();
-
     }
 
 
     @Override
     public User getSingleUserFromSharedPrefs() {
-
         String jsonUser = sharedPreferences.getString("user",null);
         singleUser = new Gson().fromJson(jsonUser,User.class);
         return singleUser;
-        
     }
 
 
