@@ -33,7 +33,6 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     DetailPresenter detailPresenter;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +45,6 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
         findViews();
 
-//        detailPresenter = new DetailPresenterImpl(this, sharedPreferences);
     }
 
     @Override

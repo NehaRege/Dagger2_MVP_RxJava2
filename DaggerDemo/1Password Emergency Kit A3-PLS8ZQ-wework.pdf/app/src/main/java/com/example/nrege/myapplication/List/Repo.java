@@ -18,9 +18,9 @@ public interface Repo {
 
     void getUsersFromRetrofit(OnCallbackFinished callbackFinished);
 
-    void saveUserToSharedPrefs(int position, User user);
+    void saveUserToSharedPrefs(User user);
 
-    User getUserFromSharedPrefs(int position);
+    User getUserFromSharedPrefs();
 
 
 

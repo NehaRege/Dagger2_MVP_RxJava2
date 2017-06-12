@@ -30,63 +30,44 @@ import retrofit2.Retrofit;
  * Created by nrege on 6/7/17.
  */
 
-public class ListPresenterImpl implements ListPresenter {
+public class ListPresenterImpl implements ListPresenter, Repo.OnCallbackFinished {
     public static final String TAG = "ListPresenterImpl";
 
     private ArrayList<User> allUsers = new ArrayList<>();
 
     ListView listView;
+    Repo repo;
 
-    Retrofit retrofit;
-    SharedPreferences sharedPreferences;
-    NetworkInfo networkInfo;
-
-    public ListPresenterImpl(ListView listView, Retrofit r, SharedPreferences s, NetworkInfo networkInfo) {
+    public ListPresenterImpl(ListView listView, Repo repo) {
         this.listView = listView;
-        this.retrofit = r;
-        this.sharedPreferences = s;
-        this.networkInfo = networkInfo;
+        this.repo = repo;
     }
-
 
     @Override
     public void init() {
-        getData();
-    }
-
-    @Override
-    public void getData() {
-        if (networkInfo != null && networkInfo.isConnected()) {
-            APIService service = retrofit.create(APIService.class);
-            Log.d(TAG, "getData: retrofit = " + retrofit);
-
-            Call<ArrayList<User>> getAllUsers = service.getUsers();
-
-            getAllUsers.enqueue(new Callback<ArrayList<User>>() {
-
-                @Override
-                public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                    Log.d(TAG, "onResponse: "+response.body());
-                    allUsers = response.body();
-                    listView.setData(allUsers);
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-                    listView.showRetrofitFailureToast();
-                    Log.d(TAG, "onFailure: " + t.getMessage());
-                }
-            });
-
-        } else {
-            listView.showNoInternetToast();
-        }
+        repo.getUsersFromRetrofit(this);
     }
 
     @Override
     public void onListItemClick(int position) {
-        sharedPreferences.edit().putString("user", new Gson().toJson(allUsers.get(position))).apply();
+        Log.d(TAG, "onListItemClick: position data = "+allUsers.get(position));
+        repo.saveUserToSharedPrefs(allUsers.get(position));
         listView.navigateToDetail();
+    }
+
+    @Override
+    public void onSuccess(ArrayList<User> users) {
+        Log.d(TAG, "onSuccess: users = "+users.size());
+        allUsers = users;
+        listView.setData(users);
+    }
+
+    @Override
+    public void onFailure(Throwable throwable) {
+
+        listView.showNoInternetToast();
+
+
 
     }
 }

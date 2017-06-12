@@ -23,7 +23,6 @@ public class RepoImpl implements Repo {
 
     private static String TAG = "RepoImpl";
 
-
     Retrofit retrofit;
     SharedPreferences sharedPreferences;
     NetworkInfo networkInfo;
@@ -52,16 +51,18 @@ public class RepoImpl implements Repo {
                 public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
                     Log.d(TAG, "onResponse: "+response.body());
                     
+                    allUsers = response.body();
+
+
                     callbackFinished.onSuccess(allUsers);
 
-                    allUsers = response.body();
 //                    listView.setData(allUsers);
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<User>> call, Throwable t) {
 //                    listView.showRetrofitFailureToast();
-                    
+
                     callbackFinished.onFailure(t);
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
@@ -69,18 +70,17 @@ public class RepoImpl implements Repo {
 
         } else {
             Log.d(TAG, "getUsersFromRetrofit: No network");
-//            listView.showNoInternetToast();
         }
         
     }
 
     @Override
-    public void saveUserToSharedPrefs(int position, User user) {
+    public void saveUserToSharedPrefs(User user) {
         sharedPreferences.edit().putString("user", new Gson().toJson(user)).apply();
     }
 
     @Override
-    public User getUserFromSharedPrefs(int position) {
+    public User getUserFromSharedPrefs() {
         
         String jsonUser = sharedPreferences.getString("user",null);
         user = new Gson().fromJson(jsonUser,User.class);

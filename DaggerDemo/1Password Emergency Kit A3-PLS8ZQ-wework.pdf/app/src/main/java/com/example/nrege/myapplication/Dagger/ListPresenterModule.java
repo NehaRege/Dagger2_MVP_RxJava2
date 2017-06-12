@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 import com.example.nrege.myapplication.List.ListPresenter;
 import com.example.nrege.myapplication.List.ListPresenterImpl;
 import com.example.nrege.myapplication.List.ListView;
+import com.example.nrege.myapplication.List.Repo;
+import com.example.nrege.myapplication.List.RepoImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,6 +19,7 @@ import retrofit2.Retrofit;
 @Module
 public class ListPresenterModule {
     ListView listView;
+//    Repo repo;
 
     public ListPresenterModule(ListView listView) {
         this.listView = listView;
@@ -28,7 +31,12 @@ public class ListPresenterModule {
     }
 
     @Provides
-    ListPresenter provideListPresenter(ListView listView, Retrofit r, SharedPreferences s, NetworkInfo networkInfo) {
-        return new ListPresenterImpl(listView, r, s, networkInfo);
+    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
+        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
+    }
+
+    @Provides
+    ListPresenter provideListPresenter(ListView listView, Repo repo) {
+        return new ListPresenterImpl(listView, repo);
     }
 }

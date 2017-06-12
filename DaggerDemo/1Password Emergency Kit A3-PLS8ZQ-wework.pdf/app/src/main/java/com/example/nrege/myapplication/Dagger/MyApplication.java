@@ -14,23 +14,12 @@ public class MyApplication extends Application {
 
     private static String BASEURL = "https://jsonplaceholder.typicode.com/";
 
-//    public StorageComponent componentStorage;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-//        componentStorage = DaggerStorageComponent
-//                .builder()
-//                .storageModule(new StorageModule(this))
-//                .retrofitModule(new RetrofitModule(this, BASEURL))
-//                .build();
     }
 
-//    public StorageComponent getStorageComponent() {
-//        return componentStorage;
-//    }
 
     public ListActivityComponent createListComponent(ListView listView){
         return DaggerListActivityComponent
@@ -46,6 +35,7 @@ public class MyApplication extends Application {
                 .builder()
                 .storageModule(new StorageModule(this))
                 .detailPresnterModule(new DetailPresnterModule(detailView))
+                .retrofitModule(new RetrofitModule(this,BASEURL))
                 .build();
     }
 

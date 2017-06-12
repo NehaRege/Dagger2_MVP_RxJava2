@@ -43,8 +43,6 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
     private RecyclerView.Adapter rvAdapter;
     private RecyclerView.LayoutManager rvLayoutManager;
 
-    private ArrayList<User> allUsers = new ArrayList<>();
-
     @Inject
     ListPresenter listPresenter;
 

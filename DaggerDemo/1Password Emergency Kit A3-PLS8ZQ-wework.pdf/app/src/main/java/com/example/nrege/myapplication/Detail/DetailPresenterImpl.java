@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.nrege.myapplication.Dagger.MyApplication;
 import com.example.nrege.myapplication.List.ListPresenterImpl;
+import com.example.nrege.myapplication.List.Repo;
 import com.example.nrege.myapplication.Models.User;
 import com.google.gson.Gson;
 
@@ -17,25 +18,31 @@ import javax.inject.Inject;
  */
 
 public class DetailPresenterImpl implements DetailPresenter {
+
     DetailView detailView;
-    SharedPreferences sharedPreferences;
+    Repo repo;
 
     User user;
 
-    public DetailPresenterImpl(DetailView detailView, SharedPreferences sharedPreferences) {
+    public DetailPresenterImpl(DetailView detailView, Repo repo) {
         this.detailView = detailView;
-        this.sharedPreferences = sharedPreferences;
+        this.repo = repo;
+
+//        this.sharedPreferences = sharedPreferences;
+
     }
 
     @Override
     public void init(){
+
         getDataFromSharedPref();
+
     }
 
     @Override
     public void getDataFromSharedPref() {
-        String jsonUser = sharedPreferences.getString("user",null);
-        user = new Gson().fromJson(jsonUser,User.class);
+
+        user = repo.getUserFromSharedPrefs();
 
         detailView.setText(
                 user.getEmail(),
