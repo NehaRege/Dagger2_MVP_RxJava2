@@ -7,7 +7,7 @@ import dagger.Component;
 /**
  * Created by nrege on 6/7/17.
  */
-@Component(modules = {StorageModule.class, RetrofitModule.class, ListPresenterModule.class})
+@Component(modules = {StorageModule.class, RetrofitModule.class, ListPresenterModule.class, RepoModule.class})
 public interface ListActivityComponent {
     void inject(ListActivity activity);
 }

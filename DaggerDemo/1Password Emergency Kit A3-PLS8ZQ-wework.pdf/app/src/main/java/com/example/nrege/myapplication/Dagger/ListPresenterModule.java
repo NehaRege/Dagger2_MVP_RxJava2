@@ -29,10 +29,10 @@ public class ListPresenterModule {
         return listView;
     }
 
-    @Provides
-    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
-        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
-    }
+//    @Provides
+//    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
+//        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
+//    }
 
     @Provides
     ListPresenter provideListPresenter(ListView listView, Repo repo) {

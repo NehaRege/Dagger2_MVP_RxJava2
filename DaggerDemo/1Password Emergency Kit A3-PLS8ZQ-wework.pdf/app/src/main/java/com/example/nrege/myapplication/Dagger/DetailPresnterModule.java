@@ -20,7 +20,6 @@ import retrofit2.Retrofit;
 public class DetailPresnterModule {
 
     DetailView detailView;
-//    Repo repo;
 
     public DetailPresnterModule(DetailView detailView) {
         this.detailView = detailView;
@@ -31,10 +30,10 @@ public class DetailPresnterModule {
         return detailView;
     }
 
-    @Provides
-    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
-        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
-    }
+//    @Provides
+//    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
+//        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
+//    }
 
     @Provides
     DetailPresenter provideDetailPresenter(DetailView detailView, Repo repo) {

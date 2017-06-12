@@ -20,13 +20,13 @@ public class MyApplication extends Application {
         super.onCreate();
     }
 
-
     public ListActivityComponent createListComponent(ListView listView){
         return DaggerListActivityComponent
                 .builder()
                 .storageModule(new StorageModule(this))
                 .retrofitModule(new RetrofitModule(this, BASEURL))
                 .listPresenterModule(new ListPresenterModule(listView))
+                .repoModule(new RepoModule(this))
                 .build();
     }
 
@@ -36,6 +36,7 @@ public class MyApplication extends Application {
                 .storageModule(new StorageModule(this))
                 .detailPresnterModule(new DetailPresnterModule(detailView))
                 .retrofitModule(new RetrofitModule(this,BASEURL))
+                .repoModule(new RepoModule(this))
                 .build();
     }
 
