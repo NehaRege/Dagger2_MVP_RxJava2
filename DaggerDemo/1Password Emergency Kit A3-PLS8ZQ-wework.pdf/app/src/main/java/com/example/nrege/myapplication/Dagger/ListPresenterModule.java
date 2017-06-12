@@ -19,7 +19,6 @@ import retrofit2.Retrofit;
 @Module
 public class ListPresenterModule {
     ListView listView;
-//    Repo repo;
 
     public ListPresenterModule(ListView listView) {
         this.listView = listView;
