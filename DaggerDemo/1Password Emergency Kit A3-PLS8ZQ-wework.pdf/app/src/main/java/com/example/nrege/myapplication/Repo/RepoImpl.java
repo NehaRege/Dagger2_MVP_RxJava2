@@ -59,6 +59,7 @@ public class RepoImpl implements Repo {
 //        }
 
         if (networkInfo != null && networkInfo.isConnected()) {
+
             APIService service = retrofit.create(APIService.class);
             Log.d(TAG, "getData: retrofit = " + retrofit);
 

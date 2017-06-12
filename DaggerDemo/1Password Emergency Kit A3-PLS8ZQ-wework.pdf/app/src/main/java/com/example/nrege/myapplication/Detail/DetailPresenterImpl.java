@@ -18,7 +18,7 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
 
     Repo repo;
 
-    User user;
+//    User user;
 
     public DetailPresenterImpl(DetailView detailView, Repo repo) {
         this.detailView = detailView;
