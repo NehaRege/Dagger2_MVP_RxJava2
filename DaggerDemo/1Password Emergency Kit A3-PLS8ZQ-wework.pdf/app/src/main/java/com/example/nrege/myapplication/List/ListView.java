@@ -21,6 +21,4 @@ public interface ListView {
 
     void showToast(String s);
 
-//    void init();
-
 }

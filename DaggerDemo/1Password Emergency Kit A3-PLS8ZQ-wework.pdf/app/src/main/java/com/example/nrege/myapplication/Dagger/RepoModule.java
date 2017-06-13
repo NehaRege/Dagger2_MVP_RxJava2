@@ -43,15 +43,4 @@ public class RepoModule {
         return new RepoImpl(networkInfo,remoteSource,localSource);
     }
 
-//    @Provides
-//    RemoteSource providesRemoteSource(Retrofit retrofit, LocalSource localSource) {
-//        return new RemoteSourceImpl(retrofit,localSource);
-//    }
-//
-//
-//    @Provides
-//    LocalSource providesLocalSource(SharedPreferences sharedPreferences, RemoteSource remoteSource) {
-//        return new LocalSourceImpl(sharedPreferences,remoteSource);
-//    }
-
 }

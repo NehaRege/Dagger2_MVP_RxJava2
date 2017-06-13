@@ -6,8 +6,6 @@ package com.example.nrege.myapplication.List;
 
 public interface ListPresenter {
 
-//    void getData();
-
     void onListItemClick(int position);
 
     void init();

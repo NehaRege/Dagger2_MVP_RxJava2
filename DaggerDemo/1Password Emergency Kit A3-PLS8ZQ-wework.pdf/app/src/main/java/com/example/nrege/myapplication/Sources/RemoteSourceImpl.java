@@ -26,8 +26,6 @@ public class RemoteSourceImpl implements RemoteSource {
 
     private User singleUser;
 
-    String id;
-
     private Retrofit retrofit;
 
     public RemoteSourceImpl(Retrofit retrofit ) {
@@ -35,7 +33,7 @@ public class RemoteSourceImpl implements RemoteSource {
     }
 
     @Override
-    public void getUserListFromRetrofit(final OnCallbackFinished callbackFinished) {
+    public void getUserListFromRetrofit(final OnCallbackFinishedForUserList callbackFinished) {
 
             APIService service = retrofit.create(APIService.class);
 
@@ -48,7 +46,7 @@ public class RemoteSourceImpl implements RemoteSource {
 
                     userList = response.body();
 
-//                    localSource.saveUserListToSharedPrefs(userList);
+                    Log.d(TAG, "onResponse: user list = "+userList);
 
                     callbackFinished.onSuccess(userList, "retrofit");
 
@@ -76,8 +74,6 @@ public class RemoteSourceImpl implements RemoteSource {
             public void onResponse(Call<User> call, Response<User> response) {
 
                 singleUser = response.body();
-
-//                localSource.saveSingleUserToSharedPrefs(singleUser);
 
                 callbackFinished.onSuccess(singleUser,"retrofit");
 

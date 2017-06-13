@@ -13,12 +13,10 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
 
     private static String TAG = "DetailPresenterImpl";
 
-
     DetailView detailView;
 
     Repo repo;
 
-//    User user;
 
     public DetailPresenterImpl(DetailView detailView, Repo repo) {
         this.detailView = detailView;
@@ -59,8 +57,7 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
 
     @Override
     public void onFailure(Throwable throwable) {
-
         detailView.showToast("Network call failure");
-
     }
+
 }

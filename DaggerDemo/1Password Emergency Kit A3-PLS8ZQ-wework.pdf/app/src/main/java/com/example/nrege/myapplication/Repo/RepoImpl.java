@@ -26,23 +26,17 @@ import retrofit2.Retrofit;
  * Created by nrege on 6/9/17.
  */
 
-public class RepoImpl implements Repo, RemoteSource.OnCallbackFinished, RemoteSource.OnCallbackFinishedForSingleUser {
+public class RepoImpl implements Repo {
 
     private static String TAG = "RepoImpl";
 
-    private Retrofit retrofit;
-    private SharedPreferences sharedPreferences;
     @Nullable
     private NetworkInfo networkInfo;
 
     RemoteSource remoteSource;
     LocalSource localSource;
 
-    private User singleUser;
-
     String id;
-
-    private ArrayList<User> userList = new ArrayList<>();
 
     public RepoImpl(@Nullable NetworkInfo networkInfo, RemoteSource remoteSource, LocalSource localSource) {
         this.networkInfo = networkInfo;
@@ -51,139 +45,61 @@ public class RepoImpl implements Repo, RemoteSource.OnCallbackFinished, RemoteSo
     }
 
 
-    /*
-    *
-    *       User List
-    *
-    *
-    * */
-
-
     @Override
-    public void getUserListFromRetrofit(final OnCallbackFinished callbackFinished) {
-//        if(userList!=null){
-//            callbackFinished.onSuccess(userList);
-//        }
+    public void getUserList(final OnCallbackFinishedForUserList callbackFinished) {
 
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            APIService service = retrofit.create(APIService.class);
-            Log.d(TAG, "getData: retrofit = " + retrofit);
-
-            Call<ArrayList<User>> getAllUsers = service.getUsers();
-
-            getAllUsers.enqueue(new Callback<ArrayList<User>>() {
-
+            remoteSource.getUserListFromRetrofit(new RemoteSource.OnCallbackFinishedForUserList() {
                 @Override
-                public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-                    Log.d(TAG, "onResponse: "+response.body());
-
-                    Log.d(TAG, "onResponse: data from retrofit");
-                    
-                    userList = response.body();
-
-                    saveUserListToSharedPrefs(userList);
-
-                    callbackFinished.onSuccess(userList, "retrofit");
-
+                public void onSuccess(ArrayList<User> users, String s) {
+                    localSource.saveUserListToSharedPrefs(users);
+                    callbackFinished.onSuccess(users,s);
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-
-                    callbackFinished.onFailure(t);
-
-                    Log.d(TAG, "onFailure: " + t.getMessage());
-
+                public void onFailure(Throwable throwable) {
+                    callbackFinished.onFailure(throwable);
                 }
             });
 
         } else {
-
-            Log.d(TAG, "getUsersFromRetrofit: No network");
-
-            callbackFinished.onSuccess(getUserListFromSharedPrefs(), "shared_prefs");
-
+            callbackFinished.onSuccess(localSource.getUserListFromSharedPrefs(),"shared_prefs");
         }
+
     }
 
     @Override
     public void saveUserListToSharedPrefs(ArrayList<User> allUsers){
-
-        Log.d(TAG, "saveUserListToSharedPrefs: all users = "+allUsers);
-
-        Type listType = new TypeToken<ArrayList<User>>() {}.getType();
-
-        sharedPreferences.edit().putString("user_list", new Gson().toJson(allUsers,listType)).apply();
-
-    }
-
-
-    private ArrayList<User> getUserListFromSharedPrefs(){
-
-        Log.d(TAG, "getUserListFromSharedPrefs: ");
-        String jsonUser = sharedPreferences.getString("user_list",null);
-
-        Type type = new TypeToken<ArrayList<User>>(){}.getType();
-        ArrayList<User> userList = new Gson().fromJson(jsonUser,type);
-
-        Log.d(TAG, "getUserListFromSharedPrefs: userList = "+userList);
-        return userList;
-
-    }
-
-    /*
-    *
-    *       Single User
-    *
-    * */
-
-    @Override
-    public void position(int position) {
-        id = Integer.toString(position);
+        localSource.saveUserListToSharedPrefs(allUsers);
     }
 
     @Override
     public void getSingleUser(String id, final OnCallbackFinishedForSingleUser callbackFinished) {
 
         if (networkInfo != null && networkInfo.isConnected()) {
+            
+            remoteSource.getSingleUserFromRetrofit(id, new RemoteSource.OnCallbackFinishedForSingleUser() {
+                @Override
+                public void onSuccess(User user, String s) {
+                    localSource.saveSingleUserToSharedPrefs(user);
+                    callbackFinished.onSuccess(user,s);
+                }
 
-            remoteSource.getSingleUserFromRetrofit(id,this);
+                @Override
+                public void onFailure(Throwable throwable) {
+                    callbackFinished.onFailure(throwable);
+                }
+            });
 
         } else {
             callbackFinished.onSuccess(localSource.getSingleUserFromSharedPrefs(),"shared_prefs");
         }
-
     }
 
     @Override
     public void saveSingleUserToSharedPrefs(User user) {
-
-        localSource.saveSingleUserToSharedPrefs(user);
-
-    }
-
-
-//    @Override
-//    public User getSingleUserFromSharedPrefs() {
-//        String jsonUser = sharedPreferences.getString("user",null);
-//        singleUser = new Gson().fromJson(jsonUser,User.class);
-//        return singleUser;
-//    }
-
-
-    @Override
-    public void onSuccess(ArrayList<User> users, String s) {
-        localSource.saveUserListToSharedPrefs(users);
-    }
-
-    @Override
-    public void onSuccess(User user, String s) {
         localSource.saveSingleUserToSharedPrefs(user);
     }
 
-    @Override
-    public void onFailure(Throwable throwable) {
-        Log.d(TAG, "onFailure: ");
-    }
 }

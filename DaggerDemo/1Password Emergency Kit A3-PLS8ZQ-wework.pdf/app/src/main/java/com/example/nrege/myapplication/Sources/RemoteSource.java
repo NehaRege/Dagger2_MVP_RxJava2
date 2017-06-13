@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public interface RemoteSource {
 
-    interface OnCallbackFinished {
+    interface OnCallbackFinishedForUserList {
 
         void onSuccess(ArrayList<User> users, String s);
 
@@ -26,7 +26,7 @@ public interface RemoteSource {
 
     }
 
-    void getUserListFromRetrofit(OnCallbackFinished callbackFinished);
+    void getUserListFromRetrofit(OnCallbackFinishedForUserList callbackFinished);
 
     void getSingleUserFromRetrofit(String id, OnCallbackFinishedForSingleUser callbackFinished);
 

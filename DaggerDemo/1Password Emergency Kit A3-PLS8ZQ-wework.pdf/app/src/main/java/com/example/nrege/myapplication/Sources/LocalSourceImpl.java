@@ -22,7 +22,6 @@ public class LocalSourceImpl implements LocalSource {
 
     private User singleUser;
 
-
     public LocalSourceImpl(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }

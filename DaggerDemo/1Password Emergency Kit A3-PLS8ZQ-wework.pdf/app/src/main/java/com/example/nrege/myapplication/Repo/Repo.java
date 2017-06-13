@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface Repo {
 
-    interface OnCallbackFinished {
+    interface OnCallbackFinishedForUserList {
         void onSuccess(ArrayList<User> users, String s);
 
         void onFailure(Throwable throwable);
@@ -22,22 +22,14 @@ public interface Repo {
         void onFailure(Throwable throwable);
     }
 
-    void getUserListFromRetrofit(OnCallbackFinished callbackFinished);
+
+
+    void getUserList(OnCallbackFinishedForUserList callbackFinished);
 
     void saveUserListToSharedPrefs(ArrayList<User> allUsers);
-
 
     void getSingleUser(String id, OnCallbackFinishedForSingleUser callbackFinished);
 
     void saveSingleUserToSharedPrefs(User user);
-
-//    User getSingleUserFromSharedPrefs();
-
-
-
-    void position(int position);
-
-    //todo rename to getuser()
-
 
 }
