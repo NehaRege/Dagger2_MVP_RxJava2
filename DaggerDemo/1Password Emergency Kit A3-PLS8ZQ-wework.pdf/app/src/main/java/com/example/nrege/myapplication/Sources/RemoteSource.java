@@ -20,6 +20,4 @@ public interface RemoteSource {
 
     void getSingleUserFromRetrofit(String id, OnCallbackFinished<User> callbackFinished);
 
-
-
 }
