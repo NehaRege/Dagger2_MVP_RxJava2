@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by nrege on 6/7/17.
  */
 
-public class ListPresenterImpl implements ListPresenter, Repo.OnCallbackFinishedForUserList {
+public class ListPresenterImpl implements ListPresenter, Repo.OnCallbackFinished<ArrayList<User>> {
     private static final String TAG = "ListPresenterImpl";
 
     private ArrayList<User> allUsers = new ArrayList<>();
@@ -58,6 +58,7 @@ public class ListPresenterImpl implements ListPresenter, Repo.OnCallbackFinished
         listView.setData(allUsers);
 
     }
+
 
     @Override
     public void onFailure(Throwable throwable) {

@@ -9,7 +9,7 @@ import com.example.nrege.myapplication.Models.User;
  * Created by nrege on 6/7/17.
  */
 
-public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFinishedForSingleUser {
+public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFinished<User> {
 
     private static String TAG = "DetailPresenterImpl";
 

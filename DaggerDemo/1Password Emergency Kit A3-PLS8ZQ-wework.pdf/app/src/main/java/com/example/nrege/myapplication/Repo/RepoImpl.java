@@ -44,13 +44,12 @@ public class RepoImpl implements Repo {
         this.localSource = localSource;
     }
 
-
     @Override
-    public void getUserList(final OnCallbackFinishedForUserList callbackFinished) {
+    public void getUserList(final OnCallbackFinished<ArrayList<User>> callbackFinished) {
 
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            remoteSource.getUserListFromRetrofit(new RemoteSource.OnCallbackFinishedForUserList() {
+            remoteSource.getUserListFromRetrofit(new RemoteSource.OnCallbackFinished<ArrayList<User>>() {
                 @Override
                 public void onSuccess(ArrayList<User> users, String s) {
                     localSource.saveUserListToSharedPrefs(users);
@@ -70,16 +69,11 @@ public class RepoImpl implements Repo {
     }
 
     @Override
-    public void saveUserListToSharedPrefs(ArrayList<User> allUsers){
-        localSource.saveUserListToSharedPrefs(allUsers);
-    }
-
-    @Override
-    public void getSingleUser(String id, final OnCallbackFinishedForSingleUser callbackFinished) {
+    public void getSingleUser(String id, final OnCallbackFinished<User> callbackFinished) {
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            
-            remoteSource.getSingleUserFromRetrofit(id, new RemoteSource.OnCallbackFinishedForSingleUser() {
+
+            remoteSource.getSingleUserFromRetrofit(id, new RemoteSource.OnCallbackFinished<User>() {
                 @Override
                 public void onSuccess(User user, String s) {
                     localSource.saveSingleUserToSharedPrefs(user);
@@ -95,6 +89,12 @@ public class RepoImpl implements Repo {
         } else {
             callbackFinished.onSuccess(localSource.getSingleUserFromSharedPrefs(),"shared_prefs");
         }
+
+    }
+
+    @Override
+    public void saveUserListToSharedPrefs(ArrayList<User> allUsers){
+        localSource.saveUserListToSharedPrefs(allUsers);
     }
 
     @Override

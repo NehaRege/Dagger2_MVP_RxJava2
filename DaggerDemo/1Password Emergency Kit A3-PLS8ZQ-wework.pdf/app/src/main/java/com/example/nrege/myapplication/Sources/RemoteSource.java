@@ -11,24 +11,35 @@ import java.util.ArrayList;
 
 public interface RemoteSource {
 
-    interface OnCallbackFinishedForUserList {
+//    interface OnCallbackFinishedForUserList {
+//
+//        void onSuccess(ArrayList<User> users, String s);
+//
+//        void onFailure(Throwable throwable);
+//    }
+//
+//    interface OnCallbackFinishedForSingleUser {
+//
+//        void onSuccess(User user, String s);
+//
+//        void onFailure(Throwable throwable);
+//
+//    }
 
-        void onSuccess(ArrayList<User> users, String s);
+//    void getUserListFromRetrofit(OnCallbackFinishedForUserList callbackFinished);
+//
+//    void getSingleUserFromRetrofit(String id, OnCallbackFinishedForSingleUser callbackFinished);
 
+
+    interface OnCallbackFinished<T> {
+        void onSuccess(T data, String s);
         void onFailure(Throwable throwable);
     }
 
-    interface OnCallbackFinishedForSingleUser {
+    void getUserListFromRetrofit(OnCallbackFinished<ArrayList<User>> callbackFinished);
 
-        void onSuccess(User user, String s);
+    void getSingleUserFromRetrofit(String id, OnCallbackFinished<User> callbackFinished);
 
-        void onFailure(Throwable throwable);
-
-    }
-
-    void getUserListFromRetrofit(OnCallbackFinishedForUserList callbackFinished);
-
-    void getSingleUserFromRetrofit(String id, OnCallbackFinishedForSingleUser callbackFinished);
 
 
 }
