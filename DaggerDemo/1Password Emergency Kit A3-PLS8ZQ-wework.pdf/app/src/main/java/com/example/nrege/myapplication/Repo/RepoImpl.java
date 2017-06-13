@@ -1,26 +1,12 @@
 package com.example.nrege.myapplication.Repo;
 
-import android.content.SharedPreferences;
 import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.util.Log;
-
-import com.example.nrege.myapplication.API.APIService;
 import com.example.nrege.myapplication.Models.User;
 import com.example.nrege.myapplication.Sources.LocalSource;
 import com.example.nrege.myapplication.Sources.RemoteSource;
-import com.example.nrege.myapplication.Sources.RemoteSourceImpl;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by nrege on 6/9/17.
@@ -89,7 +75,6 @@ public class RepoImpl implements Repo {
         } else {
             callbackFinished.onSuccess(localSource.getSingleUserFromSharedPrefs(),"shared_prefs");
         }
-
     }
 
     @Override

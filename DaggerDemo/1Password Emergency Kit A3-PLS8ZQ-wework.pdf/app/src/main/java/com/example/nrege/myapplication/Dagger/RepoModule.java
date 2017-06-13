@@ -28,15 +28,15 @@ public class RepoModule {
         this.myApplication = myApplication;
     }
 
-    @Provides
-    LocalSource providesLocalSource(SharedPreferences sharedPreferences) {
-        return new LocalSourceImpl(sharedPreferences);
-    }
-
-    @Provides
-    RemoteSource providesRemoteSource(Retrofit retrofit) {
-        return new RemoteSourceImpl(retrofit);
-    }
+//    @Provides
+//    LocalSource providesLocalSource(SharedPreferences sharedPreferences) {
+//        return new LocalSourceImpl(sharedPreferences);
+//    }
+//
+//    @Provides
+//    RemoteSource providesRemoteSource(Retrofit retrofit) {
+//        return new RemoteSourceImpl(retrofit);
+//    }
 
     @Provides
     Repo providesRepo(@Nullable NetworkInfo networkInfo, LocalSource localSource, RemoteSource remoteSource) {
