@@ -29,11 +29,9 @@ public class RemoteSourceImpl implements RemoteSource {
     String id;
 
     private Retrofit retrofit;
-    private LocalSource localSource;
 
-    public RemoteSourceImpl(Retrofit retrofit, LocalSource localSource ) {
+    public RemoteSourceImpl(Retrofit retrofit ) {
         this.retrofit = retrofit;
-        this.localSource = localSource;
     }
 
     @Override
@@ -50,7 +48,7 @@ public class RemoteSourceImpl implements RemoteSource {
 
                     userList = response.body();
 
-                    localSource.saveUserListToSharedPrefs(userList);
+//                    localSource.saveUserListToSharedPrefs(userList);
 
                     callbackFinished.onSuccess(userList, "retrofit");
 
@@ -79,7 +77,7 @@ public class RemoteSourceImpl implements RemoteSource {
 
                 singleUser = response.body();
 
-                localSource.saveSingleUserToSharedPrefs(singleUser);
+//                localSource.saveSingleUserToSharedPrefs(singleUser);
 
                 callbackFinished.onSuccess(singleUser,"retrofit");
 

@@ -31,7 +31,7 @@ public interface Repo {
 
     void saveSingleUserToSharedPrefs(User user);
 
-    User getSingleUserFromSharedPrefs();
+//    User getSingleUserFromSharedPrefs();
 
 
 

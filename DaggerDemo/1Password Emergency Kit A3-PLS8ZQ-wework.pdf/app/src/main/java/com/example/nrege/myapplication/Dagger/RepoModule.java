@@ -29,22 +29,29 @@ public class RepoModule {
     }
 
     @Provides
-    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences,@Nullable NetworkInfo networkInfo) {
-        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
+    LocalSource providesLocalSource(SharedPreferences sharedPreferences) {
+        return new LocalSourceImpl(sharedPreferences);
     }
 
     @Provides
-    RemoteSource providesRemoteSource(Retrofit retrofit, LocalSource localSource) {
-        return new RemoteSourceImpl(retrofit,localSource);
+    RemoteSource providesRemoteSource(Retrofit retrofit) {
+        return new RemoteSourceImpl(retrofit);
     }
-
 
     @Provides
-    LocalSource providesLocalSource(SharedPreferences sharedPreferences, RemoteSource remoteSource) {
-        return new LocalSourceImpl(sharedPreferences,remoteSource);
+    Repo providesRepo(@Nullable NetworkInfo networkInfo, LocalSource localSource, RemoteSource remoteSource) {
+        return new RepoImpl(networkInfo,remoteSource,localSource);
     }
 
-
-
+//    @Provides
+//    RemoteSource providesRemoteSource(Retrofit retrofit, LocalSource localSource) {
+//        return new RemoteSourceImpl(retrofit,localSource);
+//    }
+//
+//
+//    @Provides
+//    LocalSource providesLocalSource(SharedPreferences sharedPreferences, RemoteSource remoteSource) {
+//        return new LocalSourceImpl(sharedPreferences,remoteSource);
+//    }
 
 }

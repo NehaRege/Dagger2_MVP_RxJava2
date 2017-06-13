@@ -19,14 +19,12 @@ public class LocalSourceImpl implements LocalSource {
     private static String TAG = "LocalSourceImpl";
 
     SharedPreferences sharedPreferences;
-    RemoteSource remoteSource;
 
     private User singleUser;
 
 
-    public LocalSourceImpl(SharedPreferences sharedPreferences, RemoteSource remoteSource) {
+    public LocalSourceImpl(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
-        this.remoteSource = remoteSource;
     }
 
     @Override
