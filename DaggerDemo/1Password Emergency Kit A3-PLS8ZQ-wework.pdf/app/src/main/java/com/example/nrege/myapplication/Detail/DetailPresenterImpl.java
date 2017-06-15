@@ -25,12 +25,8 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
 
     @Override
     public void init(String position){
-
         Log.d(TAG, "init: ");
-
         repo.getSingleUser(position,this);
-
-
     }
 
     @Override
@@ -48,7 +44,7 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
                 user.getEmail(),
                 user.getPhone(),
                 user.getName(),
-                user.getAddress().getStreet()+", "+user.getAddress().getCity()+" "+user.getAddress().getZipcode(),
+                user.getAddress().getStreet()+", "+user.getAddress().getCity()+", "+user.getAddress().getZipcode(),
                 user.getCompany().getName(),
                 user.getWebsite()
         );

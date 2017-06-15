@@ -8,6 +8,4 @@ public interface DetailPresenter {
 
     void init(String s);
 
-//    void getDataFromSharedPref();
-
 }

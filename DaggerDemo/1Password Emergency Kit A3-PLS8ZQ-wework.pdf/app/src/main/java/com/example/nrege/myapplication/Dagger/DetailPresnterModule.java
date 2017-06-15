@@ -30,11 +30,6 @@ public class DetailPresnterModule {
         return detailView;
     }
 
-//    @Provides
-//    Repo providesRepo(Retrofit retrofit, SharedPreferences sharedPreferences, NetworkInfo networkInfo) {
-//        return new RepoImpl(retrofit,sharedPreferences,networkInfo);
-//    }
-
     @Provides
     DetailPresenter provideDetailPresenter(DetailView detailView, Repo repo) {
         return new DetailPresenterImpl(detailView,repo);

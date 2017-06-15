@@ -56,9 +56,7 @@ public class ListPresenterImpl implements ListPresenter, Repo.OnCallbackFinished
         repo.saveUserListToSharedPrefs(allUsers);
 
         listView.setData(allUsers);
-
     }
-
 
     @Override
     public void onFailure(Throwable throwable) {

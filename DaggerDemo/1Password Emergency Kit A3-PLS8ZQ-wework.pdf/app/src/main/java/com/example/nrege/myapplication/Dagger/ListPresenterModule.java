@@ -30,7 +30,6 @@ public class ListPresenterModule {
         return listView;
     }
 
-
     @Provides
     ListPresenter provideListPresenter(ListView listView, Repo repo) {
         return new ListPresenterImpl(listView, repo);

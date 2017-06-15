@@ -21,6 +21,12 @@ public class Address {
     @Expose
     private Geo geo;
 
+    public Address(String street, String city, String zipcode) {
+        this.street = street;
+        this.city = city;
+        this.zipcode = zipcode;
+    }
+
     public String getStreet() {
         return street;
     }

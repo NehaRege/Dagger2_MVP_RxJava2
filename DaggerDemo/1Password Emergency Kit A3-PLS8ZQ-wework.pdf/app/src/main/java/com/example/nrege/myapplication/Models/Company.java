@@ -15,6 +15,10 @@ public class Company {
     @Expose
     private String bs;
 
+    public Company(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

@@ -88,4 +88,5 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         txt_website =(TextView) findViewById(R.id.detail_website);
 
     }
+
 }

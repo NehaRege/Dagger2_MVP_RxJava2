@@ -32,6 +32,16 @@ public class User implements Serializable{
     @Expose
     private Company company;
 
+    public User(Integer id, String name, String email, Address address, String phone, Company company, String website) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.company = company;
+        this.website = website;
+    }
+
     public Integer getId() {
         return id;
     }
