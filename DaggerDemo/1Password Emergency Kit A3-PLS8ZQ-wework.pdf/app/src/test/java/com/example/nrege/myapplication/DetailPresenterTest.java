@@ -27,6 +27,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import dagger.Component;
 
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 
@@ -71,9 +72,9 @@ public class DetailPresenterTest {
 
         captor.getValue().onSuccess(user,s);
 
-        if(s.equals("retrofit")) {
-            verify(detailView).showToast(eq("User info received from Retrofit Call"));
-        }
+//        verify(detailView, never()).showToast(eq("No internet connection. Retrieving user info from Shared Preferences!"));
+        verify(detailView).showToast(eq("User info received from Retrofit Call"));
+
 
         verify(repo).saveSingleUserToSharedPrefs(user);
 
