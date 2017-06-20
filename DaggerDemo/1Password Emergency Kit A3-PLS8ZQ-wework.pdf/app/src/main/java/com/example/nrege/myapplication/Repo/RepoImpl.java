@@ -20,6 +20,7 @@ public class RepoImpl implements Repo {
     private NetworkInfo networkInfo;
 
     RemoteSource remoteSource;
+
     LocalSource localSource;
 
     String id;
