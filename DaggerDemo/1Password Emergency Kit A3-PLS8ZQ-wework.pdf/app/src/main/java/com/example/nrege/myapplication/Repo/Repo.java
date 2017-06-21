@@ -4,6 +4,9 @@ import com.example.nrege.myapplication.Models.User;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Created by nrege on 6/9/17.
@@ -11,17 +14,13 @@ import java.util.ArrayList;
 
 public interface Repo {
 
-    interface OnCallbackFinished<T> {
-        void onSuccess(T data, String s);
-        void onFailure(Throwable throwable);
-    }
+    Observable<ArrayList<User>> getUserList();
 
-    void getUserList(OnCallbackFinished<ArrayList<User>> callbackFinished);
-
-    void getSingleUser(String id, OnCallbackFinished<User> callbackFinished);
+    Observable<User> getSingleUser(String id);
 
     void saveUserListToSharedPrefs(ArrayList<User> allUsers);
 
     void saveSingleUserToSharedPrefs(User user);
+
 
 }

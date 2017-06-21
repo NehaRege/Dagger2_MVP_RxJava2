@@ -4,6 +4,9 @@ import com.example.nrege.myapplication.Models.User;
 import com.example.nrege.myapplication.Repo.Repo;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * Created by nrege on 6/12/17.
@@ -11,13 +14,9 @@ import java.util.ArrayList;
 
 public interface RemoteSource {
 
-    interface OnCallbackFinished<T> {
-        void onSuccess(T data, String s);
-        void onFailure(Throwable throwable);
-    }
+    Observable<ArrayList<User>> getUserListFromRetrofit();
 
-    void getUserListFromRetrofit(OnCallbackFinished<ArrayList<User>> callbackFinished);
+    Observable<User> getSingleUserFromRetrofit(String id);
 
-    void getSingleUserFromRetrofit(String id, OnCallbackFinished<User> callbackFinished);
 
 }

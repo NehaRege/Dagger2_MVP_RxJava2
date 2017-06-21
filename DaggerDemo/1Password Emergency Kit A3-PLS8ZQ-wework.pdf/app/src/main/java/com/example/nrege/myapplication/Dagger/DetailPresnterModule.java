@@ -35,5 +35,4 @@ public class DetailPresnterModule {
         return new DetailPresenterImpl(detailView,repo);
     }
 
-
 }

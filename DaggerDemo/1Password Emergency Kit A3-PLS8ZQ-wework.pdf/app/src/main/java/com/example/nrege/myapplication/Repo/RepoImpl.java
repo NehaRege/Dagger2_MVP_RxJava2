@@ -7,6 +7,14 @@ import com.example.nrege.myapplication.Models.User;
 import com.example.nrege.myapplication.Sources.LocalSource;
 import com.example.nrege.myapplication.Sources.RemoteSource;
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by nrege on 6/9/17.
@@ -23,7 +31,9 @@ public class RepoImpl implements Repo {
 
     LocalSource localSource;
 
-    String id;
+    ArrayList<User> allUsers = new ArrayList<>();
+
+    User user;
 
     public RepoImpl(@Nullable NetworkInfo networkInfo, RemoteSource remoteSource, LocalSource localSource) {
         this.networkInfo = networkInfo;
@@ -32,49 +42,63 @@ public class RepoImpl implements Repo {
     }
 
     @Override
-    public void getUserList(final OnCallbackFinished<ArrayList<User>> callbackFinished) {
+    public Observable<ArrayList<User>> getUserList() {
 
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            remoteSource.getUserListFromRetrofit(new RemoteSource.OnCallbackFinished<ArrayList<User>>() {
-                @Override
-                public void onSuccess(ArrayList<User> users, String s) {
-                    localSource.saveUserListToSharedPrefs(users);
-                    callbackFinished.onSuccess(users,s);
-                }
-
-                @Override
-                public void onFailure(Throwable throwable) {
-                    callbackFinished.onFailure(throwable);
-                }
-            });
+            return remoteSource.getUserListFromRetrofit();
 
         } else {
-            callbackFinished.onSuccess(localSource.getUserListFromSharedPrefs(),"shared_prefs");
+
+            allUsers = localSource.getUserListFromSharedPrefs();
+
+            return getObservable_list()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
         }
 
     }
 
+    private Observable<ArrayList<User>> getObservable_list() {
+        return Observable.fromArray(allUsers);
+//        return Observable.create(new ObservableOnSubscribe<ArrayList<User>>() {
+//            @Override
+//            public void subscribe(ObservableEmitter<ArrayList<User>> e) throws Exception {
+//                if(!e.isDisposed()) {
+//                    e.onNext(allUsers);
+//                    e.onComplete();
+//                }
+//            }
+//        });
+    }
+
+    private Observable<User> getObservable_user() {
+        return Observable.just(user);
+//        return Observable.create(new ObservableOnSubscribe<User>() {
+//            @Override
+//            public void subscribe(ObservableEmitter<User> e) throws Exception {
+//                if(!e.isDisposed()) {
+//                    e.onNext(user);
+//                    e.onComplete();
+//                }
+//            }
+//        });
+    }
+
+
     @Override
-    public void getSingleUser(String id, final OnCallbackFinished<User> callbackFinished) {
+    public Observable<User> getSingleUser(String id) {
+        if(networkInfo != null && networkInfo.isConnected()) {
 
-        if (networkInfo != null && networkInfo.isConnected()) {
-
-            remoteSource.getSingleUserFromRetrofit(id, new RemoteSource.OnCallbackFinished<User>() {
-                @Override
-                public void onSuccess(User user, String s) {
-                    localSource.saveSingleUserToSharedPrefs(user);
-                    callbackFinished.onSuccess(user,s);
-                }
-
-                @Override
-                public void onFailure(Throwable throwable) {
-                    callbackFinished.onFailure(throwable);
-                }
-            });
+            return remoteSource.getSingleUserFromRetrofit(id);
 
         } else {
-            callbackFinished.onSuccess(localSource.getSingleUserFromSharedPrefs(),"shared_prefs");
+
+            user = localSource.getSingleUserFromSharedPrefs();
+
+            return getObservable_user()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
         }
     }
 

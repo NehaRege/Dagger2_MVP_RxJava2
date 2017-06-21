@@ -5,18 +5,19 @@ import android.util.Log;
 import com.example.nrege.myapplication.Repo.Repo;
 import com.example.nrege.myapplication.Models.User;
 
+import io.reactivex.Observable;
+
 /**
  * Created by nrege on 6/7/17.
  */
 
-public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFinished<User> {
+public class DetailPresenterImpl implements DetailPresenter {
 
     private static String TAG = "DetailPresenterImpl";
 
     DetailView detailView;
 
     Repo repo;
-
 
     public DetailPresenterImpl(DetailView detailView, Repo repo) {
         this.detailView = detailView;
@@ -26,17 +27,13 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
     @Override
     public void init(String position){
         Log.d(TAG, "init: ");
-        repo.getSingleUser(position,this);
+
+        Observable<User> observable = repo.getSingleUser(position);
+        observable.subscribe(this::handleResponse, this::handleError);
+
     }
 
-    @Override
-    public void onSuccess(User user, String s) {
-
-        if(s.equals("shared_prefs")) {
-            detailView.showToast("No internet connection. Retrieving user info from Shared Preferences!");
-        } else if(s.equals("retrofit")) {
-            detailView.showToast("User info received from Retrofit Call");
-        }
+    private void handleResponse(User user) {
 
         repo.saveSingleUserToSharedPrefs(user);
 
@@ -51,9 +48,11 @@ public class DetailPresenterImpl implements DetailPresenter, Repo.OnCallbackFini
 
     }
 
-    @Override
-    public void onFailure(Throwable throwable) {
+    private void handleError(Throwable throwable) {
         detailView.showToast("Network call failure");
     }
 
 }
+
+
+
