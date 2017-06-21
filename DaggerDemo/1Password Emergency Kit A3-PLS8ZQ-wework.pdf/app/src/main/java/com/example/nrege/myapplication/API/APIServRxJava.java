@@ -3,20 +3,21 @@ package com.example.nrege.myapplication.API;
 import com.example.nrege.myapplication.Models.User;
 
 import java.util.ArrayList;
-import retrofit2.Call;
+
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * Created by nrege on 6/2/17.
+ * Created by nrege on 6/21/17.
  */
 
-public interface APIService {
+public interface APIServRxJava {
 
     @GET("/users")
-    Call<ArrayList<User>> getUsers();
+    Observable<ArrayList<User>> getUsers();
 
-    @GET("/users/{id}")
-    Call<User> getSingleUser(@Path("id") String id);
+    @GET
+    Observable<User> getSingleUser(@Path("id") String id);
 
 }

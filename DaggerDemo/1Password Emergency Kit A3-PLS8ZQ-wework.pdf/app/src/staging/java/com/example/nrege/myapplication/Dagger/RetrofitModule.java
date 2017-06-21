@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -28,6 +30,7 @@ public class RetrofitModule {
     Retrofit provideRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -5,11 +5,15 @@ import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.nrege.myapplication.API.APIServRxJava;
 import com.example.nrege.myapplication.API.APIService;
 import com.example.nrege.myapplication.Models.User;
 
 import java.util.ArrayList;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,12 +32,26 @@ public class RemoteSourceImpl implements RemoteSource {
 
     private Retrofit retrofit;
 
+    CompositeDisposable compositeDisposable;
+
     public RemoteSourceImpl(Retrofit retrofit ) {
         this.retrofit = retrofit;
     }
 
     @Override
     public void getUserListFromRetrofit(final OnCallbackFinished<ArrayList<User>> callbackFinished) {
+
+        APIServRxJava apiServRxJava = retrofit.create(APIServRxJava.class);
+
+        compositeDisposable = new CompositeDisposable();
+
+        compositeDisposable.add(apiServRxJava.getUsers()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError)
+        );
+
+        
 
         APIService service = retrofit.create(APIService.class);
 
