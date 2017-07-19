@@ -1,19 +1,14 @@
 package com.example.nrege.myapplication.Detail;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nrege.myapplication.List.ListActivity;
-import com.example.nrege.myapplication.Models.User;
 import com.example.nrege.myapplication.Dagger.MyApplication;
 import com.example.nrege.myapplication.R;
-import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
@@ -22,8 +17,6 @@ import javax.inject.Inject;
  */
 
 public class DetailActivity extends AppCompatActivity implements DetailView {
-    private static String TAG = "DetailActivity";
-
     TextView txt_email;
     TextView txt_contact;
     TextView txt_name;
@@ -33,10 +26,8 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
     String position;
 
-
     @Inject
     DetailPresenter detailPresenter;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,19 +39,13 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         Intent intent = getIntent();
         position = intent.getStringExtra("position");
 
-        Log.d(TAG, "onCreate: pos = "+position);
-
-
         findViews();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         detailPresenter.init(position);
-
-        Log.d(TAG, "onResume: pos = "+position);
     }
 
     @Override
@@ -75,18 +60,16 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
     @Override
     public void showToast(String s) {
-        Toast.makeText(this, ""+s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + s, Toast.LENGTH_SHORT).show();
     }
 
     public void findViews() {
-
-        txt_email =(TextView) findViewById(R.id.detail_textView);
-        txt_contact =(TextView) findViewById(R.id.detail_contact);
-        txt_name =(TextView) findViewById(R.id.detail_name);
-        txt_add =(TextView) findViewById(R.id.detail_add);
-        txt_company =(TextView) findViewById(R.id.detail_company);
-        txt_website =(TextView) findViewById(R.id.detail_website);
-
+        txt_email = (TextView) findViewById(R.id.detail_textView);
+        txt_contact = (TextView) findViewById(R.id.detail_contact);
+        txt_name = (TextView) findViewById(R.id.detail_name);
+        txt_add = (TextView) findViewById(R.id.detail_add);
+        txt_company = (TextView) findViewById(R.id.detail_company);
+        txt_website = (TextView) findViewById(R.id.detail_website);
     }
 
 }

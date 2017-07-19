@@ -71,8 +71,8 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
     @Override
     public void navigateToDetail(String position) {
         Intent i = new Intent(ListActivity.this, DetailActivity.class);
-        Log.d(TAG, "navigateToDetail: pos = "+position);
-        i.putExtra("position",position);
+        Log.d(TAG, "navigateToDetail: pos = " + position);
+        i.putExtra("position", position);
         startActivity(i);
     }
 
@@ -96,7 +96,7 @@ public class ListActivity extends AppCompatActivity implements CustomRecyclerVie
 
     @Override
     public void showToast(String s) {
-        Toast.makeText(this, ""+s, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "" + s, Toast.LENGTH_LONG).show();
     }
 
     public void initializeViews() {

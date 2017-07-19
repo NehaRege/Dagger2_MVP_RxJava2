@@ -25,7 +25,7 @@ public class DetailPresenterImpl implements DetailPresenter {
     }
 
     @Override
-    public void init(String position){
+    public void init(String position) {
         Log.d(TAG, "init: ");
 
         Observable<User> observable = repo.getSingleUser(position);
@@ -41,7 +41,7 @@ public class DetailPresenterImpl implements DetailPresenter {
                 user.getEmail(),
                 user.getPhone(),
                 user.getName(),
-                user.getAddress().getStreet()+", "+user.getAddress().getCity()+", "+user.getAddress().getZipcode(),
+                user.getAddress().getStreet() + ", " + user.getAddress().getCity() + ", " + user.getAddress().getZipcode(),
                 user.getCompany().getName(),
                 user.getWebsite()
         );

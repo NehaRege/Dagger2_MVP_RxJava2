@@ -35,7 +35,6 @@ public class RemoteSourceImpl implements RemoteSource {
         this.retrofit = retrofit;
     }
 
-
     @Override
     public Observable<User> getSingleUserFromRetrofit(String id) {
 
@@ -53,7 +52,6 @@ public class RemoteSourceImpl implements RemoteSource {
         return apiServRxJava.getUsers()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
-
     }
 
 }

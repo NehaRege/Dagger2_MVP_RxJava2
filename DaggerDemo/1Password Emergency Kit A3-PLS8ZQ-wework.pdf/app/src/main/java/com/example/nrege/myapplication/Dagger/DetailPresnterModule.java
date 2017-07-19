@@ -32,7 +32,7 @@ public class DetailPresnterModule {
 
     @Provides
     DetailPresenter provideDetailPresenter(DetailView detailView, Repo repo) {
-        return new DetailPresenterImpl(detailView,repo);
+        return new DetailPresenterImpl(detailView, repo);
     }
 
 }

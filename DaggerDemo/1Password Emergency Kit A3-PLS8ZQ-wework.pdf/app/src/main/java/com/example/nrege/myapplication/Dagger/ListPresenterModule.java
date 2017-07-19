@@ -26,7 +26,7 @@ public class ListPresenterModule {
     }
 
     @Provides
-    ListView providesListView(){
+    ListView providesListView() {
         return listView;
     }
 

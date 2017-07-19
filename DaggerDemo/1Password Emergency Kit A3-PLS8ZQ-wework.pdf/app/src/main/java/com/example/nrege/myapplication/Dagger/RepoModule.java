@@ -30,7 +30,7 @@ public class RepoModule {
 
     @Provides
     Repo providesRepo(@Nullable NetworkInfo networkInfo, LocalSource localSource, RemoteSource remoteSource) {
-        return new RepoImpl(networkInfo,remoteSource,localSource);
+        return new RepoImpl(networkInfo, remoteSource, localSource);
     }
 
 }

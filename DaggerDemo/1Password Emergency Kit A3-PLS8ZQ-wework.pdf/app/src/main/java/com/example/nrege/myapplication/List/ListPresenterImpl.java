@@ -1,5 +1,6 @@
 package com.example.nrege.myapplication.List;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by nrege on 6/7/17.
@@ -32,13 +35,42 @@ public class ListPresenterImpl implements ListPresenter {
 
     @Override
     public void init() {
-        observable  = repo.getUserList();
-        observable.subscribe(this::handleResponse, this::handleError);
+        observable = repo.getUserList();
+
+        observable.subscribe(new Observer<ArrayList<User>>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull ArrayList<User> users) {
+
+                allUsersRx = users;
+
+                repo.saveUserListToSharedPrefs(allUsersRx);
+
+                listView.setData(allUsersRx);
+
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                listView.showToast("Network call failed!");
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     private void handleResponse(ArrayList<User> users) {
 
-        Log.d(TAG, "handleResponse: all users in presenter = "+users);
+        Log.d(TAG, "handleResponse: all users in presenter = " + users);
 
         allUsersRx = users;
 
@@ -57,7 +89,7 @@ public class ListPresenterImpl implements ListPresenter {
 
         repo.saveSingleUserToSharedPrefs(allUsersRx.get(position));
 
-        int pos = position+1;
+        int pos = position + 1;
 
         listView.navigateToDetail(Integer.toString(pos));
 

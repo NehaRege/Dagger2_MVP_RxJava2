@@ -15,7 +15,7 @@
 //public class MainActivity extends AppCompatActivity {
 //
 //    String text;
-//    TextView textView;
+//    TextView textViewName;
 //
 //    @Inject
 //    SharedPreferences sharedPreferences;
@@ -28,13 +28,13 @@
 //        ((MyApplication)getApplication()).getStorageComponent().inject(this);
 //
 //        Button button = (Button) findViewById(R.id.activity_main_button_save);
-//        textView = (TextView) findViewById(R.id.activity_main_txt);
+//        textViewName = (TextView) findViewById(R.id.activity_main_txt);
 //
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //
-//                text = textView.getText().toString().trim();
+//                text = textViewName.getText().toString().trim();
 //
 //                sharedPreferences.edit().putString("text",text).apply();
 //

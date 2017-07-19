@@ -19,7 +19,7 @@
 //public class BActivity extends AppCompatActivity {
 //
 //    String text;
-//    TextView textView;
+//    TextView textViewName;
 //    Button button;
 //
 //    @Inject
@@ -33,7 +33,7 @@
 //        ((MyApplication)getApplication()).getStorageComponent().inject(this);
 //
 //        button = (Button) findViewById(R.id.activity_b_button_done);
-//        textView = (TextView) findViewById(R.id.activity_b_txt);
+//        textViewName = (TextView) findViewById(R.id.activity_b_txt);
 //
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -43,7 +43,7 @@
 //
 //                text = sharedPreferences.getString("text",null);
 //
-//                textView.setText(text);
+//                textViewName.setText(text);
 //
 //
 //            }
